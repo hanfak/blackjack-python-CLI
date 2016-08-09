@@ -1,3 +1,21 @@
+US0a
+  - User dealt two cards closest to 20 wins
+    - from list of cards 1 - 10
+  - USer dealt cards including face cards
+  - User dealt cards including ace closest to 21
+  - List includes suit (and value)
+  - Extract cards, hand, card,
+  - Two players play(below)
+
+  game.new(hand1, hand2)
+  game.deal
+    hand1.store(cards.new.randomCard)
+    hand2.store(cards.new.randomCard)
+    Twice
+    game.winner
+  game.winner
+    hand1.score compare with hand2.score
+
 User story 1:
   - Dealt two cards each
   - Player closest to 21 wins
