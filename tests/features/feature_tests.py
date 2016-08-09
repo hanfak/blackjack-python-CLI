@@ -7,8 +7,8 @@ class TestUserStory(unittest.TestCase):
     def setUp(self):
         self.blackjack = Game()
 
-    @mock.patch('random.choice')
-    def test_user_story_1(self, random_call):
-        """One player, numbers cards wins closest to 10"""
-        random_call.return_value = 8
-        self.assertTrue(self.blackjack.deal())
+    def test_user_story_1(self):
+        """One player,two cards, number closest to 20 wins"""
+        self.blackjack.pickCards = MagicMock(return_value=[10,8])
+        self.blackjack.deal()
+        self.assertTrue(self.blackjack.winner())

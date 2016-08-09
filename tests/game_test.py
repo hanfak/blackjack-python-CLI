@@ -11,14 +11,23 @@ class TestGame(unittest.TestCase):
         """Only cards from 1 to 10 exist"""
         self.assertListEqual(self.blackjack.cards, [1,2,3,4,5,6,7,8,9,10])
 
-    @mock.patch('random.choice')
-    def test_1(self, random_call):
+    def test_1(self):
         """Player dealt winning card"""
-        random_call.return_value = 8
-        self.assertTrue(self.blackjack.deal())
+        self.blackjack.pickCards = MagicMock(return_value=[10,8])
+        self.blackjack.deal()
 
-    @mock.patch('random.choice')
-    def test_2(self, random_call):
+        self.assertTrue(self.blackjack.winner())
+
+    def test_2(self):
         """Player dealt losing hand"""
-        random_call.return_value = 3
+        self.blackjack.pickCards = MagicMock(return_value=[1,7])
+        self.blackjack.deal()
+
         self.assertFalse(self.blackjack.deal())
+
+    def test_3(self):
+        """When card is dealt, removed from pack"""
+        self.blackjack.deal()
+
+        self.assertEqual(len(self.blackjack.cards), 9)
+        self.assertFalse(self.blackjack.hand[0] in self.blackjack.cards)
