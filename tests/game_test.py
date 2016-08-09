@@ -9,7 +9,7 @@ class TestGame(unittest.TestCase):
 
     def test_0(self):
         """Only cards from 1 to 10 exist"""
-        self.assertListEqual(self.blackjack.cards, [1,2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K'])
+        self.assertListEqual(self.blackjack.cards, [2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K', 'A'])
 
     def test_1a(self):
         """Player dealt winning cards"""
@@ -20,14 +20,14 @@ class TestGame(unittest.TestCase):
 
     def test_1b(self):
         """Player dealt losing hand"""
-        self.blackjack.pick_cards = MagicMock(return_value=[1,7])
+        self.blackjack.pick_cards = MagicMock(return_value=[2,7])
         self.blackjack.deal()
 
         self.assertFalse(self.blackjack.deal())
 
     def test_1c(self):
         """Player dealt cards from deck"""
-        self.blackjack.pick_cards = MagicMock(return_value=[1,7])
+        self.blackjack.pick_cards = MagicMock(return_value=[2,7])
         self.blackjack.deal()
 
         self.assertTrue(self.blackjack.hand[0] in self.blackjack.cards)
@@ -52,7 +52,7 @@ class TestGame(unittest.TestCase):
         self.blackjack.deal()
         self.blackjack.new_game()
 
-        self.assertEqual(self.blackjack.cards,[1,2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K'])
+        self.assertEqual(self.blackjack.cards,[2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K', 'A'])
 
     def test_4a(self):
         """Include points for one face cards"""
@@ -67,3 +67,17 @@ class TestGame(unittest.TestCase):
         self.blackjack.deal()
 
         self.assertEqual(self.blackjack.points(),20)
+
+    def test_5a(self):
+        """include points where one card is an ace"""
+        self.blackjack.pick_cards = MagicMock(return_value=['A',7])
+        self.blackjack.deal()
+
+        self.assertEqual(self.blackjack.points(), 18)
+
+    def test_5b(self):
+        """include points win with black jack"""
+        self.blackjack.pick_cards = MagicMock(return_value=['K','A'])
+        self.blackjack.deal()
+
+        self.assertTrue(self.blackjack.is_winner())

@@ -2,18 +2,22 @@ import random
 
 class Game:
     def __init__(self):
-        self.cards = [1,2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K']
+        self.cards = [2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K', 'A']
         self.hand = []
 
     def deal(self):
         self.hand.extend(self.pick_cards())
 
     def points(self):
+        self.hand = self.__change_ace_card()
         self.hand = self.__change_face_card()
         return sum(i for i in self.hand)
 
+    def is_winner(self):
+        return self.points() == 21
+
     def new_game(self):
-        self.cards = [1,2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K']
+        self.cards = [2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K', 'A']
         self.hand = []
 
     def pick_cards(self):
@@ -30,3 +34,6 @@ class Game:
 
     def __change_face_card(self):
         return [10 if self.__check_suit(card) else card for card in self.hand]
+
+    def __change_ace_card(self):
+        return [11 if card == 'A' else card for card in self.hand]

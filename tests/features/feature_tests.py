@@ -20,7 +20,7 @@ class TestUserStory(unittest.TestCase):
         self.blackjack.points()
         self.blackjack.new_game()
 
-        self.assertListEqual(self.blackjack.cards, [1,2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K'])
+        self.assertListEqual(self.blackjack.cards, [2,3,4,5,6,7,8,9,10, 'J', 'Q', 'K','A'])
         self.assertListEqual(self.blackjack.hand, [])
 
     def test_user_story_0c(self):
@@ -29,3 +29,10 @@ class TestUserStory(unittest.TestCase):
         self.blackjack.deal()
 
         self.assertEqual(self.blackjack.points(), 20)
+
+    def test_user_story_0d(self):
+        """_Play game with ace card"""
+        self.blackjack.pick_cards = MagicMock(return_value=['A','Q'])
+        self.blackjack.deal()
+
+        self.assertTrue(self.blackjack.is_winner())
