@@ -12,15 +12,15 @@ class TestGame(unittest.TestCase):
         self.assertListEqual(self.blackjack.cards, [1,2,3,4,5,6,7,8,9,10])
 
     def test_1(self):
-        """Player dealt winning card"""
-        self.blackjack.pickCards = MagicMock(return_value=[10,8])
+        """Player dealt winning cards"""
+        self.blackjack.pick_cards = MagicMock(return_value=[10,8])
         self.blackjack.deal()
 
-        self.assertTrue(self.blackjack.winner())
+        self.assertTrue(self.blackjack.is_winner())
 
     def test_2(self):
         """Player dealt losing hand"""
-        self.blackjack.pickCards = MagicMock(return_value=[1,7])
+        self.blackjack.pick_cards = MagicMock(return_value=[1,7])
         self.blackjack.deal()
 
         self.assertFalse(self.blackjack.deal())
